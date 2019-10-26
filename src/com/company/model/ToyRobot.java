@@ -1,6 +1,6 @@
 package com.company.model;
 
-public class ToyRobot {
+public class ToyRobot extends TableObject {
     private Direction direction;
 
     public ToyRobot(Direction direction) {

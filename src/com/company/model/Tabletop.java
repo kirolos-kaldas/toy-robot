@@ -2,17 +2,13 @@ package com.company.model;
 
 public class Tabletop {
 
-    private boolean[][] tableOccupancyGrid;
+    private TableObject[][] grid;
 
-    public Tabletop(int row, int column) {
-        tableOccupancyGrid = new boolean[row][column];
+    public Tabletop(int rows, int columns) {
+        this.grid = new TableObject[rows][columns];
     }
 
-    public boolean[][] getTableOccupancyGrid() {
-        return tableOccupancyGrid;
-    }
-
-    public void changeOccupancy(int row, int column, boolean isOccupied) {
-        this.tableOccupancyGrid[row][column] = isOccupied;
+    public TableObject[][] getGrid() {
+        return this.grid;
     }
 }
