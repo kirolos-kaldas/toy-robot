@@ -26,6 +26,7 @@ public class UserInterface {
                 System.out.println("Enter Command: (PLACE X,Y,F, MOVE, LEFT, RIGHT, REPORT, EXIT)");
                 command = scanner.nextLine();
 
+                // Regex to check for the PLACE command with the correct format
                 String regex = "(?i:PLACE) [0-9],[0-9],(NORTH|EAST|SOUTH|WEST)";
                 if (command.matches(regex)) {
                     String[] splitCommand = command.split(" ");
@@ -35,6 +36,8 @@ public class UserInterface {
                     int y = Integer.parseInt(commandParts[1]);
                     Direction direction = Direction.valueOf(commandParts[2]);
 
+                    // If the robot is already on the table then don't create
+                    // a new robot and just move the existing one
                     if (!alreadyPlaced) {
                         ToyRobot robot = new ToyRobot(direction);
                         controller = new RobotController(robot);
@@ -46,6 +49,7 @@ public class UserInterface {
                     }
                 }
 
+                // If the PLACE command has been executed then allow to execute the other commands
                 if (alreadyPlaced) {
                     switch (command.toUpperCase()) {
                         case "MOVE":
