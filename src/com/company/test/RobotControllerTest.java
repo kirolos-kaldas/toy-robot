@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 
 public class RobotControllerTest {
 
-    RobotController controller;
+    private RobotController controller;
 
     @Test
     public void testPlaceRobot() throws Exception {
@@ -29,8 +29,8 @@ public class RobotControllerTest {
         controller = new RobotController(robot);
         controller.placeRobot(table, 0, 1);
 
-        controller.placeRobot(table, 2, 2, Direction.SOUTH);
-        assertNotNull(table.getGrid()[2][2]);
+        controller.placeRobot(table, 3, 2, Direction.SOUTH);
+        assertNotNull(table.getGrid()[3][2]);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class RobotControllerTest {
         controller.placeRobot(table, 0, 1);
 
         controller.moveRobot(table);
-        assertTrue(table.getGrid()[1][1] == robot);
+        assertTrue(table.getGrid()[0][2] == robot);
     }
 
     @Test
@@ -84,9 +84,9 @@ public class RobotControllerTest {
         Tabletop table = new Tabletop(5, 5);
         ToyRobot robot = new ToyRobot(Direction.EAST);
         controller = new RobotController(robot);
-        controller.placeRobot(table, 2, 2);
+        controller.placeRobot(table, 1, 2);
 
         String report = controller.report();
-        assertTrue(report.equals("2,2,EAST"));
+        assertTrue(report.equals("1,2,EAST"));
     }
 }

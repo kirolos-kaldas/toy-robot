@@ -21,19 +21,19 @@ public class RobotController {
             return Direction.values()[(currentDir.ordinal() + 1) % 4];
     }
 
-    public void placeRobot(Tabletop table, int row, int column) throws Exception {
+    public void placeRobot(Tabletop table, int column, int row) throws Exception {
         Validator.validateBounds(5, 5, row, column);
-        table.getGrid()[row][column] = this.robot;
+        table.getGrid()[column][row] = this.robot;
         this.currentRow = row;
         this.currentColumn = column;
     }
 
-    public void placeRobot(Tabletop table, int row, int column, Direction direction) throws Exception {
+    public void placeRobot(Tabletop table, int column, int row, Direction direction) throws Exception {
         Validator.validateBounds(5, 5, row, column);
-        table.getGrid()[this.currentRow][this.currentColumn] = null;
+        table.getGrid()[this.currentColumn][this.currentRow] = null;
 
         this.robot.setDirection(direction);
-        table.getGrid()[row][column] = this.robot;
+        table.getGrid()[column][row] = this.robot;
         this.currentRow = row;
         this.currentColumn = column;
     }
@@ -42,14 +42,14 @@ public class RobotController {
         int[] horizontalMovement = {0, 1, 0, -1};
         int[] verticalMovement = {1, 0, -1, 0};
 
-        table.getGrid()[currentRow][currentColumn] = null;
+        table.getGrid()[this.currentColumn][this.currentRow] = null;
 
         int newRow = currentRow + verticalMovement[this.robot.getDirection().ordinal()];
         int newColumn = currentColumn + horizontalMovement[this.robot.getDirection().ordinal()];
 
         Validator.validateBounds(5, 5, newRow, newColumn);
 
-        table.getGrid()[newRow][newColumn] = this.robot;
+        table.getGrid()[newColumn][newRow] = this.robot;
         this.currentRow = newRow;
         this.currentColumn = newColumn;
     }
@@ -63,6 +63,6 @@ public class RobotController {
     }
 
     public String report() {
-        return this.currentRow + "," + this.currentColumn + "," + this.robot.getDirection();
+        return this.currentColumn + "," + this.currentRow + "," + this.robot.getDirection();
     }
 }
