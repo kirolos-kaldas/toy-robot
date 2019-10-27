@@ -18,7 +18,7 @@ public class RobotControllerTest {
     RobotController controller = new RobotController();
 
     @Test
-    public void testPlaceRobot() {
+    public void testPlaceRobot() throws Exception {
         Tabletop table = new Tabletop(5, 5);
         ToyRobot robot = new ToyRobot(Direction.NORTH);
 
@@ -27,17 +27,18 @@ public class RobotControllerTest {
     }
 
     @Test
-    public void testPlaceRobotOutOfBounds() {
+    public void testPlaceRobotOutOfBounds() throws Exception {
+        ee.expect(Exception.class);
+        ee.expectMessage("RobotController.INVALID_TABLETOP_LOCATION");
+
         Tabletop table = new Tabletop(5, 5);
         ToyRobot robot = new ToyRobot(Direction.NORTH);
 
         controller.placeRobot(table, robot, 6, 1);
-        ee.expect(Exception.class);
-        ee.expectMessage("RobotController.INVALID_TABLETOP_LOCATION");
     }
 
     @Test
-    public void testMoveRobot() {
+    public void testMoveRobot() throws Exception {
         Tabletop table = new Tabletop(5, 5);
         ToyRobot robot = new ToyRobot(Direction.NORTH);
         controller.placeRobot(table, robot, 0, 1);
@@ -47,7 +48,19 @@ public class RobotControllerTest {
     }
 
     @Test
-    public void testRotateRobotLeft() {
+    public void testMoveRobotOutOfBounds() throws Exception {
+        ee.expect(Exception.class);
+        ee.expectMessage("RobotController.INVALID_TABLETOP_LOCATION");
+
+        Tabletop table = new Tabletop(5, 5);
+        ToyRobot robot = new ToyRobot(Direction.NORTH);
+        controller.placeRobot(table, robot, 0, 1);
+
+        controller.moveRobot(table, 4, 1);
+    }
+
+    @Test
+    public void testRotateRobotLeft() throws Exception {
         Tabletop table = new Tabletop(5, 5);
         ToyRobot robot = new ToyRobot(Direction.NORTH);
         controller.placeRobot(table, robot, 0, 1);
@@ -58,7 +71,7 @@ public class RobotControllerTest {
     }
 
     @Test
-    public void testRotateRobotRight() {
+    public void testRotateRobotRight() throws Exception {
         Tabletop table = new Tabletop(5, 5);
         ToyRobot robot = new ToyRobot(Direction.EAST);
         controller.placeRobot(table, robot, 2, 2);
@@ -69,7 +82,7 @@ public class RobotControllerTest {
     }
 
     @Test
-    public void testReport() {
+    public void testReport() throws Exception {
         Tabletop table = new Tabletop(5, 5);
         ToyRobot robot = new ToyRobot(Direction.EAST);
         controller.placeRobot(table, robot, 2, 2);
