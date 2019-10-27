@@ -7,62 +7,77 @@ import com.company.utility.Validator;
 
 public class RobotController {
 
-    private int currentRow, currentColumn;
+    private int currentX, currentY;
     private ToyRobot robot;
 
     public RobotController(ToyRobot robot) {
         this.robot = robot;
     }
 
+    /* Get rotated direction */
     private Direction rotate(Direction currentDir, String side) {
         if (side.equals("LEFT"))
+            // Shifts across the directions to the left and loops back around
             return Direction.values()[((((currentDir.ordinal() - 1) % 4) + 4) % 4)];
         else
+            // Shifts across the directions to the right and loops back around
             return Direction.values()[(currentDir.ordinal() + 1) % 4];
     }
 
-    public void placeRobot(Tabletop table, int column, int row) throws Exception {
-        Validator.validateBounds(5, 5, row, column);
-        table.getGrid()[column][row] = this.robot;
-        this.currentRow = row;
-        this.currentColumn = column;
+    /* Places the robot on the table */
+    public void placeRobot(Tabletop table, int x, int y) throws Exception {
+        // Checks if the desired position is out of bounds
+        Validator.validateBounds(5, 5, x, y);
+        table.getGrid()[x][y] = this.robot;
+        this.currentX = x;
+        this.currentY = y;
     }
 
-    public void placeRobot(Tabletop table, int column, int row, Direction direction) throws Exception {
-        Validator.validateBounds(5, 5, row, column);
-        table.getGrid()[this.currentColumn][this.currentRow] = null;
+    /* Places the robot to a different position then it's current one */
+    public void placeRobot(Tabletop table, int x, int y, Direction direction) throws Exception {
+        // Checks if the desired position is out of bounds
+        Validator.validateBounds(5, 5, x, y);
+        // Unset the robot from previous position
+        table.getGrid()[this.currentX][this.currentY] = null;
 
         this.robot.setDirection(direction);
-        table.getGrid()[column][row] = this.robot;
-        this.currentRow = row;
-        this.currentColumn = column;
+        table.getGrid()[x][y] = this.robot;
+        this.currentX = x;
+        this.currentY = y;
     }
 
+    /* Moves the robot towards the direction it's facing */
     public void moveRobot(Tabletop table) throws Exception {
         int[] horizontalMovement = {0, 1, 0, -1};
         int[] verticalMovement = {1, 0, -1, 0};
 
-        table.getGrid()[this.currentColumn][this.currentRow] = null;
+        // Unset the robot from previous position
+        table.getGrid()[this.currentX][this.currentY] = null;
 
-        int newRow = currentRow + verticalMovement[this.robot.getDirection().ordinal()];
-        int newColumn = currentColumn + horizontalMovement[this.robot.getDirection().ordinal()];
+        // Get horizontally and vertically according to the direction of the robot
+        int newX = currentX + horizontalMovement[this.robot.getDirection().ordinal()];
+        int newY = currentY + verticalMovement[this.robot.getDirection().ordinal()];
 
-        Validator.validateBounds(5, 5, newRow, newColumn);
+        // Checks if the next step is out of bounds
+        Validator.validateBounds(5, 5, newX, newY);
 
-        table.getGrid()[newColumn][newRow] = this.robot;
-        this.currentRow = newRow;
-        this.currentColumn = newColumn;
+        table.getGrid()[newX][newY] = this.robot;
+        this.currentX = newX;
+        this.currentY = newY;
     }
 
+    /* Rotate robot 90 degrees clockwise */
     public void rotateRobotRight() {
         this.robot.setDirection(rotate(this.robot.getDirection(), "RIGHT"));
     }
 
+    /* Rotate robot 90 degrees anticlockwise */
     public void rotateRobotLeft() {
         this.robot.setDirection(rotate(this.robot.getDirection(), "LEFT"));
     }
 
+    /* Report robot position and direction info */
     public String report() {
-        return this.currentColumn + "," + this.currentRow + "," + this.robot.getDirection();
+        return this.currentX + "," + this.currentY + "," + this.robot.getDirection();
     }
 }

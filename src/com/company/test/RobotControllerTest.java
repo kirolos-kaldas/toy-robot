@@ -45,6 +45,16 @@ public class RobotControllerTest {
     }
 
     @Test
+    public void testUnsetRobotAfterReplace() throws Exception {
+        Tabletop table = new Tabletop(5, 5);
+        ToyRobot robot = new ToyRobot(Direction.NORTH);
+        controller = new RobotController(robot);
+        controller.placeRobot(table, 0, 3);
+        controller.placeRobot(table, 2, 3, Direction.SOUTH);
+        assertNull(table.getGrid()[0][3]);
+    }
+
+    @Test
     public void testMoveRobot() throws Exception {
         Tabletop table = new Tabletop(5, 5);
         ToyRobot robot = new ToyRobot(Direction.NORTH);
@@ -53,6 +63,16 @@ public class RobotControllerTest {
 
         controller.moveRobot(table);
         assertTrue(table.getGrid()[0][2] == robot);
+    }
+
+    @Test
+    public void testUnsetRobotAfterMove() throws Exception {
+        Tabletop table = new Tabletop(5, 5);
+        ToyRobot robot = new ToyRobot(Direction.NORTH);
+        controller = new RobotController(robot);
+        controller.placeRobot(table, 2, 1);
+        controller.moveRobot(table);
+        assertNull(table.getGrid()[2][1]);
     }
 
     @Test

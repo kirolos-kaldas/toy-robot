@@ -2,8 +2,8 @@ package com.company.utility;
 
 public class Validator {
 
-    public static void validateBounds(int rowLimit, int columnLimit, int rowTo, int columnTo) throws Exception {
-        if (rowLimit <= rowTo || columnLimit <= columnTo) {
+    public static void validateBounds(int horizontalLimit, int verticalLimit, int x, int y) throws Exception {
+        if (horizontalLimit <= x || verticalLimit <= y) {
             throw new Exception("Validator.INVALID_TABLETOP_LOCATION");
         }
     }

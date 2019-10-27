@@ -18,16 +18,16 @@ public class ValidatorTest {
     }
 
     @Test
-    public void testValidateBoundsInvalidRow() throws Exception {
+    public void testValidateBoundsInvalidY() throws Exception {
         ee.expect(Exception.class);
         ee.expectMessage("Validator.INVALID_TABLETOP_LOCATION");
-        Validator.validateBounds(5, 5, 6, 1);
+        Validator.validateBounds(5, 5, 1, 6);
     }
 
     @Test
-    public void testValidateBoundsInvalidColumn() throws Exception {
+    public void testValidateBoundsInvalidX() throws Exception {
         ee.expect(Exception.class);
         ee.expectMessage("Validator.INVALID_TABLETOP_LOCATION");
-        Validator.validateBounds(5, 5, 0, 6);
+        Validator.validateBounds(5, 5, 6, 0);
     }
 }
