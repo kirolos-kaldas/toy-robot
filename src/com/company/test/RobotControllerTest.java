@@ -3,7 +3,7 @@ package com.company.test;
 import com.company.utility.Direction;
 import com.company.model.Tabletop;
 import com.company.model.ToyRobot;
-import com.company.service.RobotController;
+import com.company.controller.RobotController;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

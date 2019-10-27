@@ -1,4 +1,4 @@
-package com.company.service;
+package com.company.controller;
 
 import com.company.model.Tabletop;
 import com.company.model.ToyRobot;
