@@ -19,11 +19,14 @@ public class TabletopTest {
     }
 
     @Test
-    public void testTabletopGrid() {
+    public void testTabletopGridRows() {
         Tabletop table = new Tabletop(5, 5);
-        // Check if number of rows is correct
         assertTrue(table.getGrid().length == 5);
-        // Check if number of columns per row is correct
+    }
+
+    @Test
+    public void testTabletopGridColumns() {
+        Tabletop table = new Tabletop(5, 5);
         for (int i = 0; i < 5; i++) {
             assertTrue(table.getGrid()[i].length == 5);
         }

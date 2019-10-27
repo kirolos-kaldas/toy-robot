@@ -1,6 +1,6 @@
 package com.company.test;
 
-import com.company.model.Direction;
+import com.company.utility.Direction;
 import com.company.model.ToyRobot;
 import org.junit.Test;
 import static org.junit.Assert.*;

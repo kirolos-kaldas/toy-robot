@@ -1,4 +1,4 @@
-package com.company.model;
+package com.company.utility;
 
 public enum Direction {
     NORTH, EAST, SOUTH, WEST;

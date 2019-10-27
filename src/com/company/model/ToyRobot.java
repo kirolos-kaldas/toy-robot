@@ -1,5 +1,7 @@
 package com.company.model;
 
+import com.company.utility.Direction;
+
 public class ToyRobot extends TableObject {
     private Direction direction;
 
