@@ -7,6 +7,13 @@ import com.company.utility.Validator;
 
 public class RobotController {
 
+    private int currentRow, currentColumn;
+    private ToyRobot robot;
+
+    public RobotController(ToyRobot robot) {
+        this.robot = robot;
+    }
+
     private Direction rotate(Direction currentDir, String side) {
         if (side.equals("LEFT"))
             return Direction.values()[((((currentDir.ordinal() - 1) % 4) + 4) % 4)];
@@ -14,38 +21,48 @@ public class RobotController {
             return Direction.values()[(currentDir.ordinal() + 1) % 4];
     }
 
-    public void placeRobot(Tabletop table, ToyRobot robot, int row, int column) throws Exception {
+    public void placeRobot(Tabletop table, int row, int column) throws Exception {
         Validator.validateBounds(5, 5, row, column);
-        table.getGrid()[row][column] = robot;
+        table.getGrid()[row][column] = this.robot;
+        this.currentRow = row;
+        this.currentColumn = column;
     }
 
-    public void moveRobot(Tabletop table, int currentRow, int currentColumn) throws Exception {
+    public void placeRobot(Tabletop table, int row, int column, Direction direction) throws Exception {
+        Validator.validateBounds(5, 5, row, column);
+        table.getGrid()[this.currentRow][this.currentColumn] = null;
+
+        this.robot.setDirection(direction);
+        table.getGrid()[row][column] = this.robot;
+        this.currentRow = row;
+        this.currentColumn = column;
+    }
+
+    public void moveRobot(Tabletop table) throws Exception {
         int[] horizontalMovement = {0, 1, 0, -1};
         int[] verticalMovement = {1, 0, -1, 0};
-        ToyRobot robot = (ToyRobot)table.getGrid()[currentRow][currentColumn];
 
         table.getGrid()[currentRow][currentColumn] = null;
 
-        Validator.validateBounds(5, 5,
-                currentRow + verticalMovement[robot.getDirection().ordinal()],
-                currentColumn + horizontalMovement[robot.getDirection().ordinal()]);
+        int newRow = currentRow + verticalMovement[this.robot.getDirection().ordinal()];
+        int newColumn = currentColumn + horizontalMovement[this.robot.getDirection().ordinal()];
 
-        table.getGrid()[currentRow + verticalMovement[robot.getDirection().ordinal()]]
-                [currentColumn + horizontalMovement[robot.getDirection().ordinal()]] = robot;
+        Validator.validateBounds(5, 5, newRow, newColumn);
+
+        table.getGrid()[newRow][newColumn] = this.robot;
+        this.currentRow = newRow;
+        this.currentColumn = newColumn;
     }
 
-    public void rotateRobotRight(Tabletop table, int currentRow, int currentColumn) {
-        ToyRobot robot = (ToyRobot)table.getGrid()[currentRow][currentColumn];
-        robot.setDirection(rotate(robot.getDirection(), "RIGHT"));
+    public void rotateRobotRight() {
+        this.robot.setDirection(rotate(this.robot.getDirection(), "RIGHT"));
     }
 
-    public void rotateRobotLeft(Tabletop table, int currentRow, int currentColumn) {
-        ToyRobot robot = (ToyRobot)table.getGrid()[currentRow][currentColumn];
-        robot.setDirection(rotate(robot.getDirection(), "LEFT"));
+    public void rotateRobotLeft() {
+        this.robot.setDirection(rotate(this.robot.getDirection(), "LEFT"));
     }
 
-    public String report(Tabletop table, int currentRow, int currentColumn) {
-        ToyRobot robot = (ToyRobot)table.getGrid()[currentRow][currentColumn];
-        return currentRow + "," + currentColumn + "," + robot.getDirection();
+    public String report() {
+        return this.currentRow + "," + this.currentColumn + "," + this.robot.getDirection();
     }
 }
