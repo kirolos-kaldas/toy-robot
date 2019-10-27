@@ -3,6 +3,7 @@ package com.company.service;
 import com.company.model.Tabletop;
 import com.company.model.ToyRobot;
 import com.company.utility.Direction;
+import com.company.utility.Validator;
 
 public class RobotController {
 
@@ -14,12 +15,8 @@ public class RobotController {
     }
 
     public void placeRobot(Tabletop table, ToyRobot robot, int row, int column) throws Exception {
-        try {
-            table.getGrid()[row][column] = robot;
-        }
-        catch (Exception e) {
-            throw new Exception("RobotController.INVALID_TABLETOP_LOCATION");
-        }
+        Validator.validateBounds(5, 5, row, column);
+        table.getGrid()[row][column] = robot;
     }
 
     public void moveRobot(Tabletop table, int currentRow, int currentColumn) throws Exception {
@@ -29,13 +26,12 @@ public class RobotController {
 
         table.getGrid()[currentRow][currentColumn] = null;
 
-        try {
-            table.getGrid()[currentRow + verticalMovement[robot.getDirection().ordinal()]]
-                    [currentColumn + horizontalMovement[robot.getDirection().ordinal()]] = robot;
-        }
-        catch (Exception e) {
-            throw new Exception("RobotController.INVALID_TABLETOP_LOCATION");
-        }
+        Validator.validateBounds(5, 5,
+                currentRow + verticalMovement[robot.getDirection().ordinal()],
+                currentColumn + horizontalMovement[robot.getDirection().ordinal()]);
+
+        table.getGrid()[currentRow + verticalMovement[robot.getDirection().ordinal()]]
+                [currentColumn + horizontalMovement[robot.getDirection().ordinal()]] = robot;
     }
 
     public void rotateRobotRight(Tabletop table, int currentRow, int currentColumn) {

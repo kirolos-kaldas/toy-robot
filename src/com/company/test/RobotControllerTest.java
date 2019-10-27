@@ -4,16 +4,11 @@ import com.company.utility.Direction;
 import com.company.model.Tabletop;
 import com.company.model.ToyRobot;
 import com.company.service.RobotController;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.*;
 
 public class RobotControllerTest {
-
-    @Rule
-    public ExpectedException ee = ExpectedException.none();
 
     RobotController controller = new RobotController();
 
@@ -27,17 +22,6 @@ public class RobotControllerTest {
     }
 
     @Test
-    public void testPlaceRobotOutOfBounds() throws Exception {
-        ee.expect(Exception.class);
-        ee.expectMessage("RobotController.INVALID_TABLETOP_LOCATION");
-
-        Tabletop table = new Tabletop(5, 5);
-        ToyRobot robot = new ToyRobot(Direction.NORTH);
-
-        controller.placeRobot(table, robot, 6, 1);
-    }
-
-    @Test
     public void testMoveRobot() throws Exception {
         Tabletop table = new Tabletop(5, 5);
         ToyRobot robot = new ToyRobot(Direction.NORTH);
@@ -45,18 +29,6 @@ public class RobotControllerTest {
 
         controller.moveRobot(table, 0, 1);
         assertTrue(table.getGrid()[1][1] == robot);
-    }
-
-    @Test
-    public void testMoveRobotOutOfBounds() throws Exception {
-        ee.expect(Exception.class);
-        ee.expectMessage("RobotController.INVALID_TABLETOP_LOCATION");
-
-        Tabletop table = new Tabletop(5, 5);
-        ToyRobot robot = new ToyRobot(Direction.NORTH);
-        controller.placeRobot(table, robot, 0, 1);
-
-        controller.moveRobot(table, 4, 1);
     }
 
     @Test
