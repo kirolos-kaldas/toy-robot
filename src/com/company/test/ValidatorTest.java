@@ -30,4 +30,18 @@ public class ValidatorTest {
         ee.expectMessage("Validator.INVALID_TABLETOP_LOCATION");
         Validator.validateBounds(5, 5, 6, 0);
     }
+
+    @Test
+    public void testValidateBoundsInvalidNegativeY() throws Exception {
+        ee.expect(Exception.class);
+        ee.expectMessage("Validator.INVALID_TABLETOP_LOCATION");
+        Validator.validateBounds(5, 5, 1, -1);
+    }
+
+    @Test
+    public void testValidateBoundsInvalidNegativeX() throws Exception {
+        ee.expect(Exception.class);
+        ee.expectMessage("Validator.INVALID_TABLETOP_LOCATION");
+        Validator.validateBounds(5, 5, -1, 0);
+    }
 }

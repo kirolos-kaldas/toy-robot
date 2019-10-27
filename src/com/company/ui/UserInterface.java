@@ -19,10 +19,10 @@ public class UserInterface {
         Scanner scanner = new Scanner(System.in);
         boolean alreadyPlaced = false;
         RobotController controller = null;
-        String command;
+        String command = "";
 
-        try {
-            do {
+        do {
+            try {
                 System.out.println("Enter Command: (PLACE X,Y,F, MOVE, LEFT, RIGHT, REPORT, EXIT)");
                 command = scanner.nextLine();
 
@@ -66,12 +66,12 @@ public class UserInterface {
                             break;
                     }
                 }
-            } while (!command.toUpperCase().equals("EXIT"));
-        }
-        catch (Exception e) {
-            if (e.getMessage().equals("Validator.INVALID_TABLETOP_LOCATION"))
-                System.out.println("Robot refuses to fall to destruction...");
-        }
+            }
+            catch (Exception e) {
+                if (e.getMessage().equals("Validator.INVALID_TABLETOP_LOCATION"))
+                    System.out.println("Robot refuses to fall to destruction...");
+            }
+        } while (!command.toUpperCase().equals("EXIT"));
 
         scanner.close();
     }
