@@ -12,6 +12,7 @@ Either import the Java source code in an IDE to run or run it straight
 on command line.
 To run on command line, a JAR file has been created to easily run it.
 Use the following commands in the project directory:
+
 	- cd bundle
 	- java -jar toy-robot.jar
 
